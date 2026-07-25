@@ -11,7 +11,7 @@ router.post('/', auth, async (req, res) => {
     }
 
     try {
-        const expenseDate = date || new Date();
+        const expenseDate = date || new Date().toISOString().split('T')[0];
 
         const [result] = await pool.query(
             'INSERT INTO expenses (user_id, category, description, amount, date) VALUES (?, ?, ?, ?, ?)',
@@ -50,7 +50,14 @@ router.put('/:id', auth, async (req, res) => {
     }
 
     try {
-        const [result] = await pool.query('UPDATE expenses SET category=?, description=?, amount=?, date=? WHERE id=? AND user_id=?', [category, description, amount, date, req.params.id, req.user.id]
+        const [result] = await pool.query(
+            `UPDATE expenses 
+             SET category = COALESCE(?, category), 
+                 description = COALESCE(?, description), 
+                 amount = COALESCE(?, amount), 
+                 date = COALESCE(?, date) 
+             WHERE id = ? AND user_id = ?`,
+            [category || null, description || null, amount || null, date || null, req.params.id, req.user.id]
     );
 
     if (result.affectedRows === 0) {

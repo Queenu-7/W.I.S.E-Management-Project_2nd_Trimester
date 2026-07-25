@@ -3,7 +3,7 @@ const auth = require('../middleware/auth');
 const pool = require('../config/db');
 const router = express.Router();
 
-const ALLOWED_STATUSES = ['pending', 'investigating', 'resolved', 'dismissed'];
+const ALLOWED_STATUSES = ['new', 'reviewed', 'closed'];
 
 // submit anonymous report (no auth required)
 router.post('/', async (req, res) => {
