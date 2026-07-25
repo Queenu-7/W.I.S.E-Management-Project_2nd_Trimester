@@ -11,7 +11,7 @@ router.post('/', auth, async (req, res) => {
     }
 
     try {
-        const expenseDate = date || new Date();
+        const expenseDate = date || new Date().toISOString().split('T')[0];
 
         const [result] = await pool.query(
             'INSERT INTO expenses (user_id, category, description, amount, date) VALUES (?, ?, ?, ?, ?)',
