@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W.I.S.E Management - MerchantDashboard</title>
+    <style>
+        :root {
+            --primary-charcoal: #1E293B;
+            --accent-red: #E63946;
+            --bg-light: #F8FAFC;
+            --card-white: #FFFFFF;
+            --text-dark: #0F172A;
+            --text-muted: #64748B;
+            --border-color: #E2E8F0;
+            --success-green: #10B981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        aside#sidebar {
+            background-color: var(--primary-charcoal);
+            color: var(--card-white);
+            display: flex;
+            flex-direction: column;
+            width: 250px;
+            padding: 24px 16px;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .sidebar-brand {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+            text-align: center;
+        }
+
+        .sidebar-brand span {
+            color: var(--accent-red);
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: #94A3B8;
+            cursor: pointer;
+            font-size: 0.95rem;
+            padding: 12px 16px;
+            text-align: left;
+            transition: all 0.2s ease;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            font-weight: 600;
+            width: 100%;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--card-white);
+        }
+
+        .nav-logout{
+            margin-top: auto;
+            color: #F87171;
+        }
+
+        /* Main workplace layout */
+        main#main {
+            margin-left: 250px;
+            padding: 32px;
+            flex: 1;
+            max-width: 1200px;
+        }
+
+        /* Top bar header */
+        header.top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-title h2 {
+            font-size: 1.5rem;
+            color: var(--primary-charcoal);
+        }
+
+        .btn-emergency {
+            background-color: var(--accent-red);
+            color: var(--card-white);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(230, 57, 70, 0.35);
+            transition: transform 0.1s ease, background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-emergency:hover {
+            background-color: #D62828;
+            transform: translateY(-1px);
+        }
+
+        .btn-emergency:active {
+            transform: translateY(0);
+        }
+
+        .card {
+            background-color: var(--card-white);
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border-color);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background-color: var(--card-white);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .metric-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .metric-card h3 {
+            font-size: 1.5rem;
+            color: var(--primary-charcoal);
+            margin-top: 8px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--primary-charcoal);
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .btn-submit {
+            background-color: var(--primary-charcoal);
+            color: var(--card-white);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        th {
+            background-color: var(--bg-light);
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .tab-section {
+            display: none;
+        }
+
+        .tab-section.active{
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            aside#sidebar {
+                width: 100%;
+            height: auto;
+            position: relative;
+            }
+
+            main#main {
+                margin-left: 0;
+                padding: 16px;
+            }
+
+            body {
+                flex-direction: column;
+            }
+        } 
+        
+
+    </style>
+</head>
+<body>
+    <aside id="sidebar">
+        <div class="sidebar-brand">
+            W.I.S.E <span> Platform</span>
+        </div>
+        <button class="nav-btn active" data-tab="dashboard">Dashboard</button>
+        <button class="nav-btn" data-tab="inventory">Inventory</button>
+        <button class="nav-btn" data-tab="sales">Sales</button>
+        <button class="nav-btn" data-tab="expenses">Expenses</button>
+        <button class="nav-btn" data-tab="contacts">Emergency Contacts</button>
+        <button class="nav-btn" data-tab="reports">Safety Reporting</button>
+        <button id="logout" class="nav-btn nav-logout">Logout</button>
+    </aside>
+    <main id="main">
+        <header class="top-header">
+            <div class="header-title">
+                <h2 id="current-tab-title">Enterprise Dashboard</h2>
+            </div>
+            <button id="emergency-btn" class="btn-emergency">
+                Trigger Emergency Alert
+            </button>
+        </header>
+
+        <section id="dashboard" class="tab-section active tab">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <p>Total Products</p>
+                    <h3 id="stat-products">0</h3>
+                </div>
+                <div class="metric-card">
+                    <p>Total Sales</p>
+                    <h3 id="stat-sales">0</h3>
+                </div>
+                <div class="metric-card">
+                    <p>Total Revenue</p>
+                    <h3 id="stat-revenue">0 RWF</h3>
+                </div>
+                <div class="metric-card">
+                    <p>Expenses</p>
+                    <h3 id="stat-expenses">0 RWF</h3>
+                </div>
+                <div class="metric-card">
+                    <p>Net Profit</p>
+                    <h3 id="stat-profit">0 RWF</h3>
+                </div>
+            </div>
+        </section>
+        <section id="inventory" class="tab-section tab">
+            <div class="card">
+                <h3>Add New Product</h3>
+                <form id="product-form" class="form-grid" style="margin-top: 16px;">
+                    <div class="form-group">
+                        <label for="prod-name">Product Name</label>
+                        <input type="text" id="prod-name" placeholder="Item Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="prod-quantity">Stock Quantity</label>
+                        <input type="number" id="prod-quantity" placeholder="0" min="0" inputmode="numeric" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="prod-price">Unit Price (RWF)</label>
+                        <input type="number" id="prod-price" placeholder="0.00" step="0.01" min="0" inputmode="decimal" required>
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: flex-end;">
+                        <button type="submit" class="btn-submit">Add to Stock</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card">
+                <h3>Current Stock Inventory</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventory-list">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+        <section id="sales" class="tab-section tab">
+            <div class="card">
+                <h3>Record Sales Transaction</h3>
+                <form id="sale-form" class="form-grid" style="margin-top: 16px;">
+                    <div class="form-group">
+                        <label for="sale-product-select">Select Product</label>
+                        <select id="sale-product-select" required>
+                            <option value="">-- Choose Product --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sale-quantity">Quantity Sold</label>
+                        <input type="number" id="sale-quantity" placeholder="1" min="1" inputmode="numeric" required>
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: flex-end;">
+                        <button type="submit" class="btn-submit">Complete Sale</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card">
+                <h3>Sales History</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sale ID</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Total (RWF)</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sales-list">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+        <section id="expenses" class="tab-section tab">
+            <div class="card">
+                <h3>Record Business Expense</h3>
+                <form id="expense-form" class="form-grid" style="margin-top: 16px;">
+                    <div class="form-group">
+                        <label for="exp-category">Category</label>
+                        <input type="text" id="exp-category" placeholder="e.g. Transport, Rent, Utilities" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exp-desc">Description</label>
+                        <input type="text" id="exp-desc" placeholder="Details">
+                    </div>
+                    <div class="form-group">
+                        <label for="exp-amount">Amount (RWF)</label>
+                        <input type="number" id="exp-amount" placeholder="0.00" step="0.01" min="0" inputmode="decimal" required>
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: flex-end;">
+                        <button type="submit" class="btn-submit">Save Expense</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card">
+                <h3>Recorded Expenses</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="expense-list">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+        <section id="contacts" class="tab-section tab">
+            <div class="card">
+                <h3>Manage Trusted Contacts (Max 3)</h3>
+                <form id="contact-form" class="form-grid" style="margin-top: 16px;">
+                    <div class="form-group">
+                        <label for="contact-name">Contact Name</label>
+                        <input type="text" id="contact-name" placeholder="e.g. Jeanine (Market Manager)" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-detail">Email Address</label>
+                        <input type="email" id="contact-detail" placeholder="contact@domain.com" required>
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: flex-end;">
+                        <button type="submit" class="btn-submit">Add Contact</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card">
+                <h3>Saved Emergency Contacts</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Contact Detail</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contact-list">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+            
+        <section id="reports" class="tab-section tab">
+            <div class="card">
+                <h3>Submit Anonymous Safety Incident Report</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+                    Reports submitted here are completely unlinked from your personal merchant account (True Anonymity - NFR 4).
+                </p>
+                <form id="report-form">
+                    <div class="form-group" style="margin-bottom: 16px;">
+                        <label for="report-details">Incident Details</label>
+                        <textarea id="report-details" rows="4" placeholder="Describe the safety concern or incident..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Submit Anonymous Report</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script src="/js/dashboard.js"></script> 
+    
+    <script>
+        document.querySelectorAll('.nav-btn[data-tab]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active tab buttons
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Update tab visibility
+                document.querySelectorAll('.tab-section').forEach(sec => sec.classList.remove('active'));
+                const targetSec = document.getElementById(btn.dataset.tab);
+                if (targetSec) targetSec.classList.add('active');
+
+                // Update Top Header Title
+                const titleElem = document.getElementById('current-tab-title');
+                if (titleElem) {
+                    titleElem.textContent = btn.textContent.trim();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
