@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W.I.S.E Management - Welcome & Authentication</title>
+    <style>
+        :root {
+            --primary-charcoal: #1E293B;
+            --accent-red: #E63946;
+            --bg-light: #F8FAFC;
+            --card-white: #FFFFFF;
+            --text-dark: #0F172A;
+            --text-muted: #64748B;
+            --border-color: #E2E8F0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .auth-container {
+            background-color: var(--card-white);
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01) ;
+            width: 100%;
+            max-width: 440px;
+            border: 1px solid var(--border-color);
+        }
+
+        .brand-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .brand-header h1 {
+            color: var(--primary-charcoal);
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-header p {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            margin-top: 4px;
+        }
+
+        .tagline-badge {
+            display: inline-block;
+            background-color: rgba(230, 57, 70, 0.1);
+            color: var(--accent-red);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        /* Tab switcher navigation */
+        .tab-nav {
+            display: flex;
+            margin-bottom: 24px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            background: none;
+            border: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn.active {
+            color: var(--primary-charcoal);
+            border-bottom: 3px solid var(--primary-charcoal);
+            margin-bottom: -2px;
+        }
+
+        /* Form Inputs & Elements */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary-charcoal);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-charcoal);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-charcoal);
+            color: var(--card-white);
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 8px;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.92;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="auth-container">
+        <div class="brand-header">
+            <h1>W.I.S.E Management</h1>
+            <p>Women's Integrated Safety & Enterprise Management Platform</p>
+            <span class="tagline-badge">Enterprise Logic + Instant Safety</span>
+        </div>
+
+        <div class="tab-nav">
+            <button class="tab-btn active" data-tab="login-tab">Sign In</button>
+            <button class="tab-btn" data-tab="register-tab">Register Business</button>
+        </div>
+
+        <div id="auth-message" style="display: none; padding: 10px; margin-bottom: 16px; border-radius: 6px; font-size: 0.875rem; text-align: center;"></div>
+
+        <div id="login-tab" class="tab-content active">
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" name="email" placeholder="merchant@domain.rw" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" name="password" placeholder="........." required>
+                </div>
+                <button type="submit" class="btn-primary">Sign IN to Dashboard</button>
+            </form>
+        </div>
+
+        <div id="register-tab" class="tab-content">
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-name">Full Name</label>
+                    <input type="text" id="register-name" name="name" placeholder="Kigali Retail Stall #4" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" name="email" placeholder="merchant@domain.rw" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Password</label>
+                    <input type="password" id="register-password" name="password" placeholder="........." required>
+                </div>
+                <button type="submit" class="btn-primary">Register Account</button>
+            </form>
+        </div>
+
+        <p class="footer-note">&copy; 2026 W.I.S.E Management. All rights reserved.</p>
+    </div>
+
+    <script src="/js/main.js"></script>
+
+    <script>
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+                btn.classList.add('active');
+                const target = document.getElementById(btn.dataset.tab);
+                if (target) target.classList.add('active');
+
+                const authMsg = document.getElementById('auth-message');
+                if (authMsg) {
+                    authMsg.style.display = 'none';
+                    authMsg.textContent = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
