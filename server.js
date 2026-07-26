@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
@@ -12,12 +13,11 @@ const reportRoutes = require('./routes/reports');
 const dashboardRoutes = require('./routes/dashboard');
 
 const app = express();
+
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static('path'));
 
 app.use(express.static(path.join(__dirname)));
-
 
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
