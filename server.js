@@ -14,7 +14,10 @@ const dashboardRoutes = require('./routes/dashboard');
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.static('path'));
+
+app.use(express.static(path.join(__dirname)));
+
 
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
