@@ -24,8 +24,8 @@ router.post('/register', async (req, res) => {
         );
         res.status(201).json({ id: result.insertId });
     } catch (err) {
-
-        res.status(400).json({ error: 'Email exists or DB error'});
+	console.error(err);
+        res.status(400).json({ error: err.message});
     }
 });
 
