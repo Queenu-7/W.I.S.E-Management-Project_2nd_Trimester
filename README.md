@@ -25,7 +25,7 @@ W.I.S.E. Management bridges this gap by integrating both enterprise management a
 - Product inventory management
 - Record sales transactions 
 - Expense tracking
-- BUsiness dashboard with finacial summaries
+- Business dashboard with finacial summaries
 
 ### Safety Features
 - Manage trusted emergency contacts
