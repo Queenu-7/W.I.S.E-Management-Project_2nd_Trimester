@@ -17,15 +17,15 @@ W.I.S.E. Management bridges this gap by integrating both enterprise management a
 
 ## Features
 ### Authentication
--User regstration
--Secure login
--Protected routes using authentication middleware
+- User regstration
+- Secure login
+- Protected routes using authentication middleware
 
 ### Business Management
--Product inventory management
--Record sales transactions 
--Expense tracking
--BUsiness dashboard with finacial summaries
+- Product inventory management
+- Record sales transactions 
+- Expense tracking
+- BUsiness dashboard with finacial summaries
 
 ### Safety Features
 - Manage trusted emergency contacts
