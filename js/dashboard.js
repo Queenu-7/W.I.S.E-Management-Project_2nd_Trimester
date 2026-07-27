@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:3000";
+const API_BASE = window.location.origin;
 
 document.addEventListener("DOMContentLoaded", () => {
     loadDashboardStats();
@@ -8,7 +8,7 @@ async function loadDashboardStats() {
     try {
         const token = localStorage.getItem("token");
 
-        const response = await fetch(`${API_BASE}/dashboard`, {
+        const response = await fetch(`${API_BASE}/api/dashboard`, {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${token}`,
