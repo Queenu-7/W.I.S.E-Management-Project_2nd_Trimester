@@ -6,7 +6,7 @@ async function fetchJSON(url, method = 'GET', body = null, auth = true ) {
 
     if (auth) {
         const token = localStorage.getItem(tokenKey);
-        if (token) headers['Authorization'] = `$Bearer{token}`;
+        if (token) headers['Authorization'] = `Bearer ${token}`;
     }
 
     const options = { method, headers };
@@ -65,7 +65,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
             const f = new FormData(regForm);
 
             const response = await fetchJSON(
-                '${api}auth/register',
+                `${api}auth/register`,
                 'POST',
                 {
                     business_name: f.get('business_name'),
