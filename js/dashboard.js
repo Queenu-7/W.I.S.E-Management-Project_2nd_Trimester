@@ -2,6 +2,7 @@ const API_BASE = window.location.origin;
 
 document.addEventListener("DOMContentLoaded", () => {
     loadDashboardStats();
+    loadSalesHistory();
 });
 
 async function loadDashboardStats() {
@@ -36,5 +37,31 @@ async function loadDashboardStats() {
         console.error("Dashboard Error:", error);
 
         alert("Could not load dashboard information.");
+    }
+}
+
+async function loadSalesHistory() {
+    try {
+        const token = localStorage.getItem("wise_token");
+
+        const response = await fetch(`${API_BASE}/api/sales`, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        const sales = await response.json();
+
+        document.getElementById("sales-list").innerHTML = sales.map(sale => `
+            <tr>
+                <td>${sale.id}</td>
+                <td>${sale.product_name}</td>
+                <td>${sale.quantity}</td>
+                <td>${Number(sale.total).toLocaleString()} RWF</td>
+                <td>${sale.timestamp}</td>
+            </tr>
+            `).join("");
+    } catch (error) {
+        console.error("Sales History Error:", error);
     }
 }
