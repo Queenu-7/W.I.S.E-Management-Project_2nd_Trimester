@@ -1,5 +1,4 @@
-CREATE DATABASE wise_db;
-USE wise_db;
+USE defaultdb;
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
