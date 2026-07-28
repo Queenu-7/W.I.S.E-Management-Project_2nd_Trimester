@@ -62,14 +62,14 @@ INSERT INTO users (id, business_name, email, password_hash, role)
 VALUES (1, 'KigaliTech Store', 'demo@wise.com', '$2a$10$wK1V3z/hBqO7Y91X4uX8EOhM4QO9Z4uN2Q3Y8H2.zX2Y1Z2Y1Z2Y1', 'merchant')
 ON DUPLICATE KEY UPDATE id=id;
 
-INSERT INTO products (user_id, name, quantity, total) VALUES
+INSERT INTO products (user_id, name, quantity, unit_price) VALUES
 (1, 'POS Terminal Paper Rolls', 50, 15000.00),
 (1, 'Barcode Scanner', 12, 45000.00),
 (1, 'Cash Drawer', 5, 85000.00),
-(1, 'Reciept Printer', 8, 120000.00);
+(1, 'Receipt Printer', 8, 120000.00);
 
 INSERT INTO sales (user_id, product_id, quantity, total) VALUES
-(1, 1, 5, 7500.00),
+(1, 1, 5, 75000.00),
 (1, 2, 1, 45000.00);
 
 INSERT INTO expenses (user_id, category, description, amount, date) VALUES
