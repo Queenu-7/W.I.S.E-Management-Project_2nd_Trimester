@@ -65,3 +65,29 @@ async function loadSalesHistory() {
         console.error("Sales History Error:", error);
     }
 }
+
+async function loadProducts() {
+    try {
+        const token = localStorage.getItem("wise_token");
+
+        const response = await fetch(`${API_BASE}/api/products`, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        const products = await response.json();
+
+        document.getElementById("inventory-list").innerHTML = products.map(product => `
+            <tr>
+                <td>${product.id}</td>
+                <td>${product.name}</td>
+                <td>${product.quantity}</td>
+                <td>${Number(product.unit_price).toLocaleString()} RWF</td>
+                <td>-</td>
+            </tr>
+        `).join("");
+    } catch (error) {
+        console.error("Products Error:", error);
+    }
+}
