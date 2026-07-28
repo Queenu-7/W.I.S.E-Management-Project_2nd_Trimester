@@ -51,31 +51,32 @@ CREATE TABLE contacts (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-INSERT INTO users (id, business_name, email, password_hash, role)
-VALUES (1, 'KigaliTech Store', 'demo@wise.com', '$2a$10$wK1V3z/hBqO7Y91X4uX8EOhM4QO9Z4uN2Q3Y8H2.zX2Y1Z2Y1Z2Y1', 'merchant')
-ON DUPLICATE KEY UPDATE id=id;
-
-INSERT INTO products (user_id, name, quantity, total) VALUES
-(0, 'POS Terminal Paper Rolls', 50, 15000.00),
-(1, 'Barcode Scanner', 12, 45000.00),
-(2, 'Cash Drawer', 5, 85000.00),
-(3, 'Reciept Printer', 8, 120000.00);
-
-INSERT INTO sales (user_id, product_id, quantity, total) VALUES
-(0, 1, 5, 7500.00),
-(1, 2, 1, 45000.00);
-
-INSERT INTO expenses (user_id, category, description, amount, date) VALUES
-(0, 'Utilities', 'Store Electricity Bill', 25000.00, CURDATE()),
-(1, 'Rent', 'Monthly Shop Rent', 150000.00, CURDATE());
-
-INSERT INTO contacts (user_id, name, phone_or_email) VALUES
-(0, 'Local Helpline', 'support@helpline.org'),
-(1, 'Security Dispatch', '+250784646392');
-
 CREATE TABLE harassment_reports (
     id INT AUTO_INCREMENT PRIMARY KEY,
     incident_details TEXT NOT NULL,
     status ENUM('new','reviewed','closed') DEFAULT 'new',
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+INSERT INTO users (id, business_name, email, password_hash, role)
+VALUES (1, 'KigaliTech Store', 'demo@wise.com', '$2a$10$wK1V3z/hBqO7Y91X4uX8EOhM4QO9Z4uN2Q3Y8H2.zX2Y1Z2Y1Z2Y1', 'merchant')
+ON DUPLICATE KEY UPDATE id=id;
+
+INSERT INTO products (user_id, name, quantity, total) VALUES
+(1, 'POS Terminal Paper Rolls', 50, 15000.00),
+(1, 'Barcode Scanner', 12, 45000.00),
+(1, 'Cash Drawer', 5, 85000.00),
+(1, 'Reciept Printer', 8, 120000.00);
+
+INSERT INTO sales (user_id, product_id, quantity, total) VALUES
+(1, 1, 5, 7500.00),
+(1, 2, 1, 45000.00);
+
+INSERT INTO expenses (user_id, category, description, amount, date) VALUES
+(1, 'Utilities', 'Store Electricity Bill', 25000.00, CURDATE()),
+(1, 'Rent', 'Monthly Shop Rent', 150000.00, CURDATE());
+
+INSERT INTO contacts (user_id, name, phone_or_email) VALUES
+(1, 'Local Helpline', 'support@helpline.org'),
+(1, 'Security Dispatch', '+250784646392');
+
