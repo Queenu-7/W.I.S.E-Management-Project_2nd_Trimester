@@ -3,6 +3,9 @@ const API_BASE = window.location.origin;
 document.addEventListener("DOMContentLoaded", () => {
     loadDashboardStats();
     loadSalesHistory();
+    loadProducts();
+    loadExpenses();
+    loadContacts();
 });
 
 async function loadDashboardStats() {
@@ -89,5 +92,56 @@ async function loadProducts() {
         `).join("");
     } catch (error) {
         console.error("Products Error:", error);
+    }
+}
+
+async function loadExpenses() {
+     try {
+        const token = localStorage.getItem("wise_token");
+
+        const response = await fetch(`${API_BASE}/api/expenses`, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        const expenses = await response.json();
+
+        document.getElementById("expense-list").innerHTML = expenses.map(expense => `
+            <tr>
+                <td>${expense.id}</td>
+                <td>${expense.category}</td>
+                <td>${expense.description || ""}</td>
+                <td>${Number(expense.amount).toLocaleString()} RWF</td>
+            </tr>
+        `).join("");
+    } catch (error) {
+        console.error("Expenses Error:", error);
+    }
+
+    
+}
+
+async function loadContacts() {
+    try {
+        const token = localStorage.getItem("wise_token");
+
+        const response = await fetch(`${API_BASE}/api/contacts`, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        const contacts = await response.json();
+
+        document.getElementById("contact-list").innerHTML = contacts.map(contact => `
+            <tr>
+                <td>${contact.name}</td>
+                <td>${contact.contact_detail}</td>
+                <td>-</td>
+            </tr>
+        `).join("");
+    } catch (error) {
+        console.error("Contacts Error:", error);
     }
 }
