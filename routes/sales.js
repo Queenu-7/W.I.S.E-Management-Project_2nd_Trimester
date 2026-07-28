@@ -60,7 +60,7 @@ router.get('/', auth, async (req, res) => {
     try {
 
         const [rows] = await pool.query(
-            `SELECT s.id, s.product_id, p.name AS product_name, s.quantity, s.total, s.created_at
+            `SELECT s.id, s.product_id, p.name AS product_name, s.quantity, s.total, s.timestamp
             FROM sales s
             LEFT JOIN products p ON s.product_id = p.id
             WHERE s.user_id = ?
