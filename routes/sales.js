@@ -69,7 +69,7 @@ router.get('/', auth, async (req, res) => {
         );
     res.json(rows);
     } catch (error) {
-
+        console.error('Fetch sales error:', error);
         res.status(500).json({ error: 'Failed to load sales.'});
     } 
 });
