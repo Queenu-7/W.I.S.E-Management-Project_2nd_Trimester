@@ -52,12 +52,19 @@ router.put('/:id', auth, async (req, res) => {
     try {
         const [result] = await pool.query(
             `UPDATE expenses 
-             SET category = COALESCE(?, category), 
-                 description = COALESCE(?, description), 
-                 amount = COALESCE(?, amount), 
-                 date = COALESCE(?, date) 
-             WHERE id = ? AND user_id = ?`,
-            [category || null, description || null, amount || null, date || null, req.params.id, req.user.id]
+            SET category= COALESCE(?, category), 
+                description= COALESCE(?, description), 
+                amount= COALESCE(?, amount), 
+                date= COALESCE(?, date) 
+            WHERE id=? AND user_id=?`, 
+            [
+                category !== undefined ? category : null, 
+                description !== undefined ? description : null, 
+                amount !== undefined ? amount : null, 
+                date !== undefined ? date : null, 
+                req.params.id, 
+                req.user.id
+            ]
     );
 
     if (result.affectedRows === 0) {
