@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function loadDashboardStats() {
     try {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("wise_token");
 
         const response = await fetch(`${API_BASE}/api/dashboard`, {
             method: "GET",
@@ -22,15 +22,15 @@ async function loadDashboardStats() {
 
         const data = await response.json();
 
-        document.getElementById("stat-products").textContent = data.products;
+        document.getElementById("stat-products").textContent = data.products ?? 0;
 
-        document.getElementById("stat-sales").textContent = data.sales;
+        document.getElementById("stat-sales").textContent = data.sales ?? 0;
 
-        document.getElementById("stat-revenue").textContent = `${data.revenue.toLocaleString()} RWF`;
+        document.getElementById("stat-revenue").textContent = `${(data.revenue || 0).toLocaleString()} RWF`;
 
-        document.getElementById("stat-expenses").textContent = `${data.expenses.toLocaleString()} RWF`;
+        document.getElementById("stat-expenses").textContent = `${(data.expenses || 0).toLocaleString()} RWF`;
 
-        document.getElementById("stat-profit").textContent = `${data.profit.toLocaleString()} RWF`;
+        document.getElementById("stat-profit").textContent = `${(data.profit || 0).toLocaleString()} RWF`;
     
     } catch (error) {
         console.error("Dashboard Error:", error);
