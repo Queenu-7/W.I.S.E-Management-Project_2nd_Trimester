@@ -6,7 +6,11 @@ async function fetchJSON(url, method = 'GET', body = null, auth = true ) {
 
     if (auth) {
         const token = localStorage.getItem(tokenKey);
-        if (token) headers['Authorization'] = `Bearer ${token}`;
+        if (!token) {
+            window.location.href = '/index.html';
+            return;
+        }
+        headers['Authorization'] = `Bearer ${token}`;
     }
 
     const options = { method, headers };
@@ -19,7 +23,7 @@ async function fetchJSON(url, method = 'GET', body = null, auth = true ) {
 
     if (res.status === 401 && auth) {
         localStorage.removeItem(tokenKey);
-        window.location.href = '/login.html';
+        window.location.href = '/index.html';
         return;
     }
     
@@ -108,5 +112,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
         });
     }
 });
+
+
 
 
