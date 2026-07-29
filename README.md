@@ -115,7 +115,7 @@ database.sql
 ### Clone the repository
 
 ```bash
-git clone <repository-url>
+git clone <https://github.com/Queenu-7/W.I.S.E-Management-Project_2nd_Trimester.git>
 ```
 
 ### Navigate into the project
@@ -152,10 +152,10 @@ or during development
 npm run dev
 ```
 
-The application will run locally on:
+The application is deployed so it will run on:
 
 ```
-http://localhost:3000
+Render.com
 ```
 
 ---
@@ -195,6 +195,9 @@ The application includes several security measures including:
  - Cloud deployment
  - Data analytics and reporting
  - Business performance forecasting
+
+## WEBSITE LINK
+
 
 
 
