@@ -145,3 +145,27 @@ async function loadContacts() {
         console.error("Contacts Error:", error);
     }
 }
+
+document.getElementById("product-form").addEventListener("submit", async(e) =>{
+    e.preventDefault();
+
+    const token = localStorage.getItem("wise_token");
+
+    await fetch(`${API_BASE}/api/products`, {
+        method: "POST",
+        headers:{
+            "Content-Type":"application/json",
+            "Authorization":`Bearer ${token}`
+        },
+        body:JSON.stringify({
+            name: document.getElementById("prod-name").value,
+            quantity: document.getElementById("prod-quantity").value,
+            unit_price: document.getElementById("prod-price").value 
+        })
+    });
+
+    loadProducts();
+    loadDashboardStats();
+
+    e.target.reset();
+})
