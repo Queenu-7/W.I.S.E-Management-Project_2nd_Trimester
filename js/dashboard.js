@@ -169,3 +169,27 @@ document.getElementById("product-form").addEventListener("submit", async(e) =>{
 
     e.target.reset();
 })
+
+document.getElementById("expense-form").addEventListener("submit", async(e)=>{
+    e.preventDefault();
+
+    const token = localStorage.getItem("wise_token");
+
+    await fetch(`${API_BASE}/api/expenses`, {
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json",
+            "Authorization":`Bearer ${token}`
+        },
+        body:JSON.stringify({
+            category: document.getElementById("exp-category").value,
+            description: document.getElementById("exp-desc").value,
+            amount: document.getElementById("exp-amount").value
+        })
+    });
+
+    loadExpenses();
+    loadDashboardStats();
+
+    e.target.reset();
+});
