@@ -81,7 +81,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
             if (response.id || response.message) {
                 alert('Registered succesfully! Please log in.');
-                window.location.href = '/login.html';
+                window.location.href = '/index.html';
             } else {
                 alert(response.error || 'Registration failed');
             }
@@ -108,7 +108,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
     if (logoutBtn) {
         logoutBtn.addEventListener('click', () => {
             localStorage.removeItem(tokenKey);
-            window.location.href = '/login.html';
+            window.location.href = '/index.html';
         });
     }
 });
