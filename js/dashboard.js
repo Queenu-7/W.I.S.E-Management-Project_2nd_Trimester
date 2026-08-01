@@ -143,12 +143,16 @@ async function loadContacts() {
             }
         });
 
+        if (!response.ok) {
+            throw new Error("Failed to load contacts");
+        }
+
         const contacts = await response.json();
 
         document.getElementById("contact-list").innerHTML = contacts.map(contact => `
             <tr>
                 <td>${contact.name}</td>
-                <td>${contact.contact_detail}</td>
+                <td>${contact.phone_or_email}</td>
                 <td>-</td>
             </tr>
         `).join("");
@@ -234,7 +238,7 @@ document.getElementById("contact-form").addEventListener("submit", async (e) => 
 
     const token = localStorage.getItem("wise_token");
 
-    await fetch(`${API_BASE}/api/contacts`, {
+    const response = await fetch(`${API_BASE}/api/contacts`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -242,9 +246,16 @@ document.getElementById("contact-form").addEventListener("submit", async (e) => 
         },
         body: JSON.stringify({
             name: document.getElementById("contact-name").value,
-            contact_detail: document.getElementById("contact-detail").value
+            phone_or_email: document.getElementById("contact-detail").value
         })
     });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        alert(data.error);
+        return;
+    }
 
     await loadContacts();
 
