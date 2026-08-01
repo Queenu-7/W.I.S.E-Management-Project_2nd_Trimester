@@ -90,6 +90,17 @@ async function loadProducts() {
                 <td>-</td>
             </tr>
         `).join("");
+
+        document.getElementById("sale-product-select").innerHTML =
+        `
+        <option value="">-- Choose Product --</option>
+        ` +
+        products.map(product => `
+        <option value="${product.id}">
+            ${product.name}
+        </option>
+        `).join("");
+        
     } catch (error) {
         console.error("Products Error:", error);
     }
@@ -164,8 +175,8 @@ document.getElementById("product-form").addEventListener("submit", async(e) =>{
         })
     });
 
-    loadProducts();
-    loadDashboardStats();
+    await loadProducts();
+    await loadDashboardStats();
 
     e.target.reset();
 })
@@ -188,8 +199,64 @@ document.getElementById("expense-form").addEventListener("submit", async(e)=>{
         })
     });
 
-    loadExpenses();
-    loadDashboardStats();
+    await loadExpenses();
+    await loadDashboardStats();
 
     e.target.reset();
 });
+
+document.getElementById("sale-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem("wise_token");
+
+    await fetch(`${API_BASE}/api/sales`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            product_id: document.getElementById("sale-product-select").value,
+            quantity: document.getElementById("sale-quantity").value
+        })
+    });
+    
+    await loadSalesHistory();
+    await loadProducts();
+    await loadDashboardStats();
+
+    e.target.reset();
+});
+
+document.getElementById("contact-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem("wise_token");
+
+    await fetch(`${API_BASE}/api/contacts`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            name: document.getElementById("contact-name").value,
+            contact_detail: document.getElementById("contact-detail").value
+        })
+    });
+
+    await loadContacts();
+
+    e.target.reset();
+});
+
+//LOGOUT
+const logoutButton = document.getElementById("logout");
+
+if (logoutButton) {
+    logoutButton.addEventListener("click", () => {
+        localStorage.removeItem("wise_token");
+        window.location.href = "/index.html";
+    });
+}
