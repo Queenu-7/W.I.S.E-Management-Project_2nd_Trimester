@@ -22,7 +22,11 @@ router.post('/register', async (req, res) => {
             'INSERT INTO users (business_name, email, password_hash) VALUES (?, ?, ?)',
             [business_name || '', email, hash]
         );
+
+		console.log("REGISTER SUCCESS:", email, "ID:", result.insertId);
+		
         res.status(201).json({ id: result.insertId });
+		
     } catch (err) {
 	console.error(err);
         res.status(400).json({ error: err.message});
